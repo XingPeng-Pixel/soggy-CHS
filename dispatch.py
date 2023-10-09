@@ -121,9 +121,7 @@ class DispatchHandler(http.server.BaseHTTPRequestHandler):
 		self.end_headers()
 
 		REGION_TITLES = [
-			"100% real cbt1 server",
-			"Do you really think.",
-			"That you will escape God's judgement for your sins."
+			"封测服务器1服"
 		]
 
 		query_region_list_rsp = {
@@ -149,7 +147,7 @@ class DispatchHandler(http.server.BaseHTTPRequestHandler):
 		"data": {
 			"uid": str(PLAYER_UID),
 			"token": "token1",
-			"email": "soggy:)"
+			"email": "Dawei@mihoyo.com"
 		}
 	}
 

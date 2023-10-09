@@ -140,11 +140,11 @@ const char *const HISTORY_FILE_NAME = ".soggy_history";
 // temporary(?) constants
 const int PLAYER_UID = 1;
 const int PLAYER_PEER_ID = 0;
-const char *const PLAYER_NAME = "soggy:)";
+const char *const PLAYER_NAME = "旅行者";
 const int PLAYER_TEAM_ID = 1;
 
 // actual correct value is 5000
-const int STORE_WEIGHT_LIMIT = 1234567;
+const int STORE_WEIGHT_LIMIT = 114514;
 
 const float GROUP_LOAD_DISTANCE = 100.0f;
 const float GROUP_UNLOAD_DISTANCE = 120.0f;
@@ -1084,9 +1084,9 @@ void init_mainplayer() {
 	// give a bunch of avatars
 	for (const auto &it : exceloutput::avatar_datas) {
 		const exceloutput::AvatarData *excel_avatar = &it.second;
-		if (excel_avatar->use_type == AvatarUseType::AVATAR_FORMAL) {
+		//if (excel_avatar->use_type == AvatarUseType::AVATAR_FORMAL) {
 			mainplayer.add_avatar(excel_avatar->id);
-		}
+		//}
 	}
 
 	// add some avatars to the current team
@@ -1883,7 +1883,7 @@ void parse_args(std::vector<std::string> args_in, Args *...args_out) {
 
 void cmd_warp(YSConnection *target, std::string label, std::vector<std::string> args) {
 	if (args.size() < 3) {
-		soggy_log("usage: %s <x> <y> <z> [<sceneid>]", label.c_str());
+		soggy_log("用法: %s <x> <y> <z> [<id>]", label.c_str());
 		return;
 	}
 	NumRel<float> x;
@@ -1894,7 +1894,7 @@ void cmd_warp(YSConnection *target, std::string label, std::vector<std::string> 
 	try {
 		parse_args(args, &x, &y, &z, &sceneid_opt);
 	} catch (std::exception &) {
-		soggy_log("%s: failed to parse arguments", label.c_str());
+		soggy_log("%s: 无法解析数据", label.c_str());
 		return;
 	}
 
@@ -1904,7 +1904,7 @@ void cmd_warp(YSConnection *target, std::string label, std::vector<std::string> 
 		try {
 			exceloutput::scene_datas.at(sceneid);
 		} catch (std::out_of_range &) {
-			soggy_log("%s: no such scene %d", label.c_str(), sceneid);
+			soggy_log("%s:没有 %d 这个场景", label.c_str(), sceneid);
 			return;
 		}
 	} else {
@@ -1921,7 +1921,7 @@ void cmd_warp(YSConnection *target, std::string label, std::vector<std::string> 
 // warp to spawn of scene
 void cmd_scene(YSConnection *target, std::string label, std::vector<std::string> args) {
 	if (args.size() < 1) {
-		soggy_log("usage: %s <sceneid>", label.c_str());
+		soggy_log("用法: %s <id>", label.c_str());
 		return;
 	}
 
@@ -1929,14 +1929,14 @@ void cmd_scene(YSConnection *target, std::string label, std::vector<std::string>
 	try {
 		parse_args(args, &sceneid);
 	} catch (std::exception &) {
-		soggy_log("%s: failed to parse arguments", label.c_str());
+		soggy_log("%s: 无法解析数据", label.c_str());
 		return;
 	}
 
 	try {
 		exceloutput::scene_datas.at(sceneid);
 	} catch (std::out_of_range &) {
-		soggy_log("%s: no such scene %d", label.c_str(), sceneid);
+		soggy_log("%s:没有 %d 这个场景", label.c_str(), sceneid);
 		return;
 	}
 
@@ -1944,7 +1944,7 @@ void cmd_scene(YSConnection *target, std::string label, std::vector<std::string>
 }
 
 void cmd_help(std::string label, std::vector<std::string> args) {
-	soggy_log("commands available:");
+	soggy_log("可用指令如下:");
 	for (const auto &it : rlcmd_map) {
 		const char *cmdname = it.first.c_str();
 		soggy_log("- %s", cmdname);
@@ -1977,7 +1977,7 @@ void cmd_elfie(YSConnection *target, std::string label, std::vector<std::string>
 
 void cmd_switchelement(YSConnection *target, std::string label, std::vector<std::string> args) {
 	if (args.size() < 1) {
-		soggy_log("usage: se <element>");
+		soggy_log("用法:se + 元素名");
 		return;
 	}
 
@@ -1988,7 +1988,7 @@ void cmd_switchelement(YSConnection *target, std::string label, std::vector<std:
 		case 10000005: depot_base = 500; break;
 		case 10000007: depot_base = 700; break;
 		default:
-			soggy_log("se: active avatar must be lumine or aether");
+			soggy_log("se:设置属性的人必须是旅行者");
 			return;
 	}
 
@@ -2002,7 +2002,7 @@ void cmd_switchelement(YSConnection *target, std::string label, std::vector<std:
 	} else if (!element_name->compare("none")) {
 		depot_offset = 1;
 	} else {
-		soggy_log("se: invalid element \"%s\"", element_name->c_str());
+		soggy_log("se: 无效属性 \"%s\" (只有anemo,geo,none)", element_name->c_str());
 		return;
 	}
 
@@ -2050,7 +2050,7 @@ void run_cmd(YSConnection *target, std::string label, std::string args_line = st
 		RlCmdProcDesc *rlcmd = &it->second;
 		if (rlcmd->need_target) {
 			if (target == NULL) {
-				soggy_log("command \"%s\" requires a target", label.c_str());
+				soggy_log("指令 \"%s\" 需要一个目标", label.c_str());
 			} else {
 				rlcmd->proc_with_target(target, label, string_split(args_line));
 			}
@@ -2058,7 +2058,7 @@ void run_cmd(YSConnection *target, std::string label, std::string args_line = st
 			rlcmd->proc_no_target(label, string_split(args_line));
 		}
 	} else {
-		soggy_log("no such command \"%s\"", label.c_str());
+		soggy_log("没有这个指令 \"%s\"", label.c_str());
 	}
 }
 
@@ -2166,18 +2166,18 @@ void non_interactive_main() {
 }
 
 int main(int argc, char *argv[]) {
-	puts("█ Soggy is free software: you can redistribute it and/or modify it under the terms of");
-	puts("█   the GNU Affero General Public License as published by the Free Software Foundation,");
-	puts("█   either version 3 of the License, or (at your option) any later version.");
-	puts("█ Homepage: https://github.com/LDAsuku/soggy");
+	puts("█   Soggy 是自由软件：您可以根据");
+	puts("█   自由软件基金会发布的 GNU Affero 通用公共许可证的条款进行重新分发和/或修改，");
+	puts("█   无论是许可证的第3版，或者（由您选择）任何后续版本。");
+	puts("█   主页：https://github.com/LDAsuku/soggy");
 
 	if (soggy_load_config_file("soggy.cfg") == -1) {
-		soggy_log("error: config file soggy.cfg not found");
+		soggy_log("错误：找不到配置文件 soggy.cfg");
 		return 1;
 	}
 
 	if (load_game_data()) {
-		soggy_log("error loading resources");
+		soggy_log("加载资源出错");
 		return 1;
 	}
 
