@@ -1,63 +1,65 @@
 # Soggy
 
-Experimental server emulator for a game I forgot its name 💀
+Author is LDAsuku, this is only a zh-cn translated version
+
+一款游戏服务器的模拟器，叫什么呢....?猜猜看叭~~~ 
 
 ![soggy cat](static/soggy_cat.png "soggy cat")
 
-[Setup & Documentation](https://nitter.pussthecat.org/sillysoggycat/)
+[设置步骤与文档］(https://nitter.pussthecat.org/sillysoggycat/)
 
-## Building on GNU/Linux
+## 在 GNU/Linux 上构建
 
 ```sh
-# install dependencies (ubuntu)
+# 安装依赖项（ubuntu）
 apt install build-essential cmake libprotobuf-dev protobuf-compiler liblua5.3-dev
-# install dependencies (arch linux)
+# 安装依赖项（arch linux）
 pacman -S cmake protobuf lua
-# setup for build
+# 准备构建
 cmake -B build
-# build
+# 构建
 cmake --build build -j8
 ```
 
-## Building with Visual Studio on Microsoft Windows
+## 在 Microsoft Windows 上使用 Visual Studio 构建
 
-Make sure you've selected "C++ CMake tools for Windows" in the Visual Studio installer.
+确保你在 Visual Studio 安装器中已选择 "C++ CMake tools for Windows"。
 
-Install vcpkg [according to their documentation](https://vcpkg.io/en/getting-started.html).
+按照[vcpkg的文档](https://vcpkg.io/en/getting-started.html)安装 vcpkg。
 
 ```powershell
-# install dependencies (vcpkg)
+# 安装依赖项（vcpkg）
 vcpkg install protobuf lua[cpp]:x64-windows
 ```
 
-Open the folder in Visual Studio and build it.
+在 Visual Studio 中打开文件夹并构建。
 
-## Building with MSYS2/MinGW on Microsoft Windows
+## 在 Microsoft Windows 上使用 MSYS2/MinGW 构建
 
-Use the MINGW64 terminal.
+使用 MINGW64 终端。
 
 ```sh
-# install dependencies
+# 安装依赖项
 pacman -S ${MINGW_PACKAGE_PREFIX}-{toolchain,cmake,protobuf,lua}
-# prepare for build
+# 准备构建
 cmake -B build -G "Unix Makefiles"
-# build
+# 构建
 cmake --build build -j8
 ```
 
-## Running
+## 运行
 
-Put the `resources` directory and `soggy.cfg` in the current working directory and run soggy. Enter `help` in the interactive prompt to see a list of commands.
+将 `resources` 目录和 `soggy.cfg` 放在当前工作目录中并运行 soggy。在交互提示符中输入 `help` 以查看命令列表。
 
-`dispatch.py` is obsolete. The game server has a built-in dispatch server now.
+`dispatch.py` 已经过时。游戏服务器现在有内置的调度服务器。
 
-Resources can be found on the repo wiki.
+资源可以在仓库wiki中找到。
 
-## Client patches
+## 客户端补丁
 
 ```
 === GS.exe
-# disable AC
+# 禁用 AC
 (VA=0x140ef5080, fileoffset=0xef4480) = c3
 
 === GS_Data/Native/UserAssembly.dll
@@ -65,7 +67,7 @@ Resources can be found on the repo wiki.
 (VA=0x1802d1ef0, fileoffset=0x2d12f0) = b0 01 c3
 # skill nocd
 (VA=0x181ac998c, fileoffset=0x1ac8d8c) = 66 0f ef ff
-# skip update checks for slightly faster load time
+# 跳过更新检查以稍微加快加载时间
 (VA=0x18213221b, fileoffset=0x213161b) = 90 90 90 90 90 90
 # kill paimon
 (VA=0x182083430, fileoffset=0x2082830) = c3
