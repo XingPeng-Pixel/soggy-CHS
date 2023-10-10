@@ -47,6 +47,16 @@ cmake -B build -G "Unix Makefiles"
 cmake --build build -j8
 ```
 
+## 在 Microsoft Windows上使用WSL2的Ubuntu 22.04.2构建
+使用微软商店(Microsoft Store)下载Ubuntu 22.04.2
+clone本仓库并cd soggy-CHS
+像正常在GNU/Linux平台上一样构建程序
+修改soggy.cfg中ip为你的Ubuntu子系统分配的ip
+IP能用```sh CMD ipconfig ```  查询
+ping 一下保证连通
+打开浏览器地址栏输入```sh 127.0.0.1:8099 ``` 若看到sogging cat 就表示成功。
+
+
 ## 运行
 
 将 `resources` 目录和 `soggy.cfg` 放在当前工作目录中并运行 soggy。在交互提示符中输入 `help` 以查看命令列表。
@@ -63,12 +73,12 @@ cmake --build build -j8
 (VA=0x140ef5080, fileoffset=0xef4480) = c3
 
 === GS_Data/Native/UserAssembly.dll
-# sprint nocd
+# 冲刺无CD（能用ML的GmTalk开启无限体力infinite stamina on）
 (VA=0x1802d1ef0, fileoffset=0x2d12f0) = b0 01 c3
-# skill nocd
+# skill （技能无CD）
 (VA=0x181ac998c, fileoffset=0x1ac8d8c) = 66 0f ef ff
 # 跳过更新检查以稍微加快加载时间
 (VA=0x18213221b, fileoffset=0x213161b) = 90 90 90 90 90 90
-# kill paimon
+# 撅晕派蒙（去红圈地图边界）
 (VA=0x182083430, fileoffset=0x2082830) = c3
 ```
