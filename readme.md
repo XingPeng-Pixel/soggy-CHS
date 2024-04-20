@@ -50,15 +50,15 @@ cmake --build build -j8
 ## 在 Microsoft Windows上使用WSL2的Ubuntu 22.04.2构建
 使用微软商店(Microsoft Store)下载Ubuntu 22.04.2
 
-clone本仓库并cd soggy-CHS
+clone并进入仓库主目录
 
-像正常在GNU/Linux平台上一样构建程序
+用正常的在GNU/Linux平台上编译的步骤进行构建
 
 修改soggy.cfg中ip为你的Ubuntu子系统分配的ip
 
-IP能用CMD键入```ipconfig ```  查询
+WSL的虚拟IP可用CMD键入```ipconfig ```  查询
 
-打开浏览器地址栏输入```sh 127.0.0.1:8099 ``` 若看到soggy cat 就表示成功。
+如何检验：打开浏览器地址栏输入```https://127.0.0.1:8099 ``` 后，若看到一直soggy cat 就表示成功。
 
 
 ## 运行
